@@ -68,6 +68,7 @@ class SJSegmentView: UIScrollView {
     
     var font: UIFont?
     var selectedSegmentViewHeight: CGFloat?
+    var selectedSegmentOffset: CGFloat = 0
     let kSegmentViewTagOffset = 100
     var segmentViewOffsetWidth: CGFloat = 10.0
     var segments = [SJSegmentTab]()
@@ -230,12 +231,11 @@ class SJSegmentView: UIScrollView {
     
     func createSelectedSegmentView(_ width: CGFloat) {
         
-        let segmentView = UIView()
-        segmentView.backgroundColor = selectedSegmentViewColor
+        let segmentView = PaddedSegmentView(padding: selectedSegmentOffset)
+        segmentView.contentView.backgroundColor = selectedSegmentViewColor
         segmentView.translatesAutoresizingMaskIntoConstraints = false
         segmentContentView!.addSubview(segmentView)
         selectedSegmentView = segmentView
-        
         xPosConstraints = NSLayoutConstraint(item: segmentView,
                                              attribute: .leading,
                                              relatedBy: .equal,
@@ -365,5 +365,41 @@ class SJSegmentView: UIScrollView {
             
             layoutIfNeeded()
         }
+    }
+}
+
+
+private final class PaddedSegmentView: UIView {
+    
+    let contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    fileprivate var padding: CGFloat = 0.0
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init(padding: CGFloat) {
+        super.init(frame: CGRect.zero)
+        self.padding = padding
+        setUp()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    fileprivate func setUp() {
+        addSubview(contentView)
+        NSLayoutConstraint.activate([
+            contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            contentView.topAnchor.constraint(equalTo: topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding)
+        ])
     }
 }

@@ -121,6 +121,12 @@ import UIKit
         }
     }
     
+    open var selectedSegmentOffset: CGFloat = 0.0 {
+        didSet {
+            segmentedScrollView.selectedSegmentOffset = selectedSegmentOffset
+        }
+    }
+    
     /**
      *  Set color for segment title.
      *

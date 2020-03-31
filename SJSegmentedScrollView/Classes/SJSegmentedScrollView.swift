@@ -47,6 +47,7 @@ class SJSegmentedScrollView: UIScrollView {
     }
     
     var selectedSegmentViewHeight: CGFloat! = 0
+    var selectedSegmentOffset: CGFloat = 0
     
     var segmentBounces = false
     
@@ -263,6 +264,7 @@ class SJSegmentedScrollView: UIScrollView {
 			segmentView?.controllers					= controllers
             segmentView?.selectedSegmentViewColor		= selectedSegmentViewColor
             segmentView?.selectedSegmentViewHeight		= selectedSegmentViewHeight!
+            segmentView?.selectedSegmentOffset          = selectedSegmentOffset
             segmentView?.titleColor						= segmentTitleColor
             segmentView?.selectedTitleColor             = segmentSelectedTitleColor
             segmentView?.segmentBackgroundColor			= segmentBackgroundColor
